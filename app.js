@@ -51,6 +51,14 @@ router.delete("/todos/delete/:id", (ctx, next) => {
     ctx.body = todo;
 });
 
+router.put("/todos/update/:id", (ctx, next) => {
+    const id = ctx.params.id;
+    const todoId = todo.find((todo) => todo.id === Number(id));
+    const index = todo.indexOf(todoId);
+    todo[index].title = ctx.request.body.title;
+    ctx.body = todo;
+});
+
 app.use(bodyParser()).use(router.routes()).use(router.allowedMethods());
 
 app.listen(process.env.PORT, () => {
