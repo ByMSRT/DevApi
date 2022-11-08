@@ -1,0 +1,14 @@
+{
+    "name": "DevApi",
+    "version": "1.0.0",
+    "main": "app.js",
+    "author": "Elouan <73824665+ByMSRT@users.noreply.github.com>",
+    "license": "MIT",
+    "type": "module",
+    "dependencies": {
+        "nodemon": "^2.0.20"
+    },
+    "scripts": {
+        "dev": "nodemon server-raw.js"
+    }
+}
