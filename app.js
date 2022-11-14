@@ -1,65 +1,20 @@
+import "#config/database.js";
+import Exemple from "#components/exemple/exemple-model.js";
 import Koa from "koa";
+import respond from "koa-respond";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
+import { API_V1_ROUTER } from "#routes/index.js";
+import { API_V2_ROUTER } from "#routes/index.js";
 
 const app = new Koa();
-const router = new Router();
 
-const todo = [{
-        id: 1,
-        title: "Acheter des patates",
-    },
-    {
-        id: 2,
-        title: "Acheter des tomates",
-    },
-    {
-        id: 3,
-        title: "Acheter des carottes",
-    },
-];
-
-router.get("/", (ctx, next) => {
-    ctx.body = "Hello World";
-});
-
-router.get("/todos", (ctx, next) => {
-    ctx.body = todo;
-    console.log(todo.map((item) => item.id));
-});
-
-router.get("/todos/:id", (ctx, next) => {
-    const id = ctx.params.id;
-    const todoId = todo.find((todo) => todo.id === Number(id));
-    ctx.body = todoId;
-});
-
-router.post("/todos/add", (ctx, next) => {
-    const newTodo = {
-        id: todo.length + 1,
-        title: ctx.request.body.title,
-    };
-    todo.push(newTodo);
-    ctx.body = newTodo;
-});
-
-router.delete("/todos/delete/:id", (ctx, next) => {
-    const id = ctx.params.id;
-    const todoId = todo.find((todo) => todo.id === Number(id));
-    const index = todo.indexOf(todoId);
-    todo.splice(index, 1);
-    ctx.body = todo;
-});
-
-router.put("/todos/update/:id", (ctx, next) => {
-    const id = ctx.params.id;
-    const todoId = todo.find((todo) => todo.id === Number(id));
-    const index = todo.indexOf(todoId);
-    todo[index].title = ctx.request.body.title;
-    ctx.body = todo;
-});
-
-app.use(bodyParser()).use(router.routes()).use(router.allowedMethods());
+app.use(bodyParser())
+    .use(API_V1_ROUTER.routes())
+    .use(API_V2_ROUTER.routes())
+    .use(respond())
+    .use(API_V1_ROUTER.allowedMethods())
+    .use(API_V2_ROUTER.allowedMethods());
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
