@@ -51,40 +51,6 @@ export async function findById(ctx) {
     }
 }
 
-/* export async function update(ctx) {
-    try {
-        const idValidation = Joi.object({
-            id: Joi.string().required(),
-            title: Joi.string(),
-            status: Joi.boolean(),
-            description: Joi.string(),
-        });
-
-        const { error } = idValidation.validate({
-            id: ctx.params.id,
-            title: ctx.request.body.title,
-            status: ctx.request.body.status,
-            description: ctx.request.body.description,
-        });
-        if (error) throw new Error(error);
-
-        const updateTime = {
-            updatedAt: new Date(),
-        };
-
-
-        await Task.findByIdAndUpdate(ctx.params.id, {
-            title: ctx.request.body.title,
-            status: ctx.request.body.status,
-            description: ctx.request.body.description,
-            updatedAt: updateTime,
-        });
-        ctx.status = 200;
-        ctx.body = "Task updated";
-    } catch (e) {
-        ctx.badRequest({ message: e.message });
-    }
-} */
 
 export async function update(ctx) {
     try {
